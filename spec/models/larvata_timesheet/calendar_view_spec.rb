@@ -5,8 +5,10 @@ module LarvataTimesheet
     attr_reader :date, :start_day
 
     START_DAY = :sunday
+    DAYS = %i(sunday monday tuesday wednesday thursday friday saturday).freeze
 
     def initialize(date, start_day = START_DAY)
+      raise ArgumentError, "Invalid start day, please select one from #{DAYS}." unless DAYS.include?(start_day)
       @date = Date.parse(date)
       @start_day = start_day
     end
@@ -50,6 +52,12 @@ module LarvataTimesheet
 
           expect(calendar.dates.size).to(eq(MAX_DAY_COUNT))
         end
+      end
+
+      it 'raises an error when given an invalid start day' do
+        date = Time.zone.now
+
+        expect { CalendarView.new(date, 'ASDFGHJKL;') }.to(raise_error(ArgumentError))
       end
     end
   end
