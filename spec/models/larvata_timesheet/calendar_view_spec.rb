@@ -22,7 +22,7 @@ module LarvataTimesheet
 
   RSpec.describe(CalendarView, type: :model) do
     describe '#dates' do
-      MIN_DAY_COUNT = 35
+      MIN_DAY_COUNT = 28
       MAX_DAY_COUNT = 42
       let(:day_count_range) { (MIN_DAY_COUNT..MAX_DAY_COUNT) }
 
@@ -34,9 +34,9 @@ module LarvataTimesheet
         expect(day_count_range).to(include(calendar.dates.size))
       end
 
-      context 'with the first day of a month falling on Sunday' do
-        it 'spans 5 weeks (35 days)' do
-          date = Time.zone.parse('2019-12-01')
+      context 'with the first day of a non-leap February falling on Sunday' do
+        it 'spans 4 weeks (28 days)' do
+          date = Time.zone.parse('2015-02-01')
 
           calendar = CalendarView.new(date.to_s(:f))
 
