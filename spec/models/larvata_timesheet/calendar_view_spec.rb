@@ -2,17 +2,21 @@ require 'rails_helper'
 
 module LarvataTimesheet
   RSpec.describe(CalendarView, type: :model) do
-    describe '#dates' do
+    describe '.call' do
       MIN_DAY_COUNT = 28
       MAX_DAY_COUNT = 42
-      let(:day_count_range) { (MIN_DAY_COUNT..MAX_DAY_COUNT) }
 
-      it 'has a collection of date like objects' do
-        date = Time.zone.now
+      it 'generates a range of date-like objects' do
+        date = '2019-05-21'
 
-        calendar = CalendarView.call(date.to_s(:f))
+        calendar = CalendarView.call(date)
+        first_date = calendar.first
+        last_date = calendar.last
 
-        expect(day_count_range).to(include(calendar.size))
+        expect(first_date.date_id).to(eq('2019-04-28'))
+        expect(first_date.is_off).to(be(true))
+        expect(last_date.date_id).to(eq('2019-06-01'))
+        expect(last_date.is_off).to(be(true))
       end
 
       context 'with the first day of a non-leap February falling on Sunday' do
