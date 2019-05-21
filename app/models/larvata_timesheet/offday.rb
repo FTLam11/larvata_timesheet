@@ -12,5 +12,9 @@ module LarvataTimesheet
       is_off = date.on_weekday? ? false : true
       new(date_id: date, is_off: is_off)
     end
+
+    def as_json(*)
+      super(only: [:date_id, :is_off])
+    end
   end
 end

@@ -49,5 +49,15 @@ module LarvataTimesheet
         expect(offday.is_off).to(be(true))
       end
     end
+
+    describe '#as_json' do
+      it 'has the required keys' do
+        offday = build(:offday)
+
+        result = JSON.parse(offday.to_json).keys
+
+        expect(result).to(include('date_id', 'is_off'))
+      end
+    end
   end
 end
