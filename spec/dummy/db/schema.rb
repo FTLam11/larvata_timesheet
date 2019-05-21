@@ -13,10 +13,11 @@
 ActiveRecord::Schema.define(version: 20190520094252) do
 
   create_table "larvata_timesheet_offdays", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
-    t.string "date_id"
+    t.string "date_id", null: false
     t.boolean "is_off", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["date_id"], name: "index_larvata_timesheet_offdays_on_date_id", unique: true
   end
 
 end
