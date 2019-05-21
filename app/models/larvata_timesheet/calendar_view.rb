@@ -13,7 +13,7 @@ module LarvataTimesheet
 
       (start..fin).map do |day|
         offdays.detect(-> { Offday.spawn(day) }) do |off_day|
-          off_day.date_id == day
+          off_day.date_id == day.to_s
         end
       end
     end
