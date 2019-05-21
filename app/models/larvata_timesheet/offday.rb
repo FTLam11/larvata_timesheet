@@ -6,10 +6,10 @@ module LarvataTimesheet
     validates :is_off, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
 
     def self.around_range(date_id)
-      date = Date.parse(date_id)
-      start = date.beginning_of_month.beginning_of_week
-      finish = date.end_of_month.end_of_week
-      where("date(date_id) BETWEEN ? AND ?", start, finish)
+
+    def self.spawn(date)
+      is_off = date.on_weekday? ? false : true
+      new(date_id: date, is_off: is_off)
     end
   end
 end
