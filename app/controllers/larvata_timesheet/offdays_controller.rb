@@ -3,7 +3,7 @@ require_dependency "larvata_timesheet/application_controller"
 module LarvataTimesheet
   class OffdaysController < ApplicationController
     def index
-      date_id = params[:date] || Date.today.to_s
+      date_id = params[:date_id] || Date.today.to_s
       render json: { data: CalendarView.call(date_id) }
     end
 
@@ -18,7 +18,7 @@ module LarvataTimesheet
     end
 
     def update
-      offday = Offday.find(params[:id])
+      offday = Offday.find(params[:date_id])
 
       if offday.update(offday_params)
         render json: { message: true }
@@ -28,7 +28,7 @@ module LarvataTimesheet
     end
 
     def destroy
-      Offday.find(params[:id]).destroy
+      Offday.find(params[:date_id]).destroy
     end
 
     private
