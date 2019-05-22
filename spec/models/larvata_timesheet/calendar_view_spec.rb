@@ -3,8 +3,8 @@ require 'rails_helper'
 module LarvataTimesheet
   RSpec.describe(CalendarView, type: :model) do
     describe '.call' do
-      MIN_DAY_COUNT = 28
-      MAX_DAY_COUNT = 42
+      MIN_DAY_COUNT = 4 * 7
+      MAX_DAY_COUNT = 6 * 7
 
       it 'generates a range of date-like objects' do
         date = '2019-05-21'
