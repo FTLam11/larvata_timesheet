@@ -11,7 +11,7 @@ module LarvataTimesheet
           today = Date.today.to_s
           create(:offday, date_id: today, is_off: true)
 
-          get '/larvata_timesheet/offdays'
+          get offdays_path
 
           expect(response.status).to(eq(200))
           expect(response.content_type).to(eq('application/json'))
@@ -23,7 +23,7 @@ module LarvataTimesheet
 
       context 'with a date param' do
         it 'responds with calendar data for the selected date' do
-          get '/larvata_timesheet/offdays', params: { date: '2019-02-11' }
+          get offdays_path, params: { date_id: '2019-02-11' }
 
           expect(response.status).to(eq(200))
           expect(response.content_type).to(eq('application/json'))
@@ -36,9 +36,8 @@ module LarvataTimesheet
       context 'with valid date and offday inputs' do
         it 'creates an offday' do
           date = Date.today
-          params = { date_id: date.to_s, is_off: true }
 
-          post '/larvata_timesheet/offdays', params: params
+          post offdays_path, params: { date_id: date.to_s, is_off: true }
 
           expect(response.status).to(eq(201))
         end
@@ -46,10 +45,9 @@ module LarvataTimesheet
 
       context 'with invalid date input' do
         it 'does not create an offday and responds with an error' do
-          params = { date_id: 'AAA', is_off: true }
           offday_count = Offday.count
 
-          post '/larvata_timesheet/offdays', params: params
+          post offdays_path, params: { date_id: 'AAA', is_off: true }
 
           expect(Offday.count).to(eq(offday_count))
           expect(response.status).to(eq(400))
@@ -61,9 +59,8 @@ module LarvataTimesheet
     describe 'PATCH offdays#update' do
       it 'updates an offday' do
         offday = create(:offday, is_off: false)
-        params = { date_id: offday.date_id, is_off: true }
 
-        patch "/larvata_timesheet/offdays/#{offday.id}", params: params
+        patch offday_path(offday), params: { is_off: true }
 
         expect(offday.reload.is_off).to(be(true))
         expect(response.status).to(eq(200))
@@ -74,7 +71,7 @@ module LarvataTimesheet
       it 'destroys an offday' do
         offday = create(:offday)
 
-        delete "/larvata_timesheet/offdays/#{offday.id}"
+        delete offday_path(offday)
 
         expect { offday.reload }.to(raise_error(ActiveRecord::RecordNotFound))
         expect(response.status).to(eq(204))
