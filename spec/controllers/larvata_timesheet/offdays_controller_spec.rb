@@ -31,5 +31,31 @@ module LarvataTimesheet
         end
       end
     end
+
+    describe 'POST offdays#create' do
+      context 'with valid date and offday inputs' do
+        it 'creates an offday' do
+          date = Date.today
+          params = { date_id: date.to_s, is_off: true }
+
+          post '/larvata_timesheet/offdays', params: params
+
+          expect(response.status).to(eq(201))
+        end
+      end
+
+      context 'with invalid date input' do
+        it 'does not create an offday and responds with an error' do
+          params = { date_id: 'AAA', is_off: true }
+          offday_count = Offday.count
+
+          post '/larvata_timesheet/offdays', params: params
+
+          expect(Offday.count).to(eq(offday_count))
+          expect(response.status).to(eq(400))
+          expect(body_content["message"]).to(include("Date only allows YYYY-MM-DD format"))
+        end
+      end
+    end
   end
 end
