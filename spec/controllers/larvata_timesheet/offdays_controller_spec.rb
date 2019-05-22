@@ -57,5 +57,17 @@ module LarvataTimesheet
         end
       end
     end
+
+    describe 'PATCH offdays#update' do
+      it 'updates an offday' do
+        offday = create(:offday, is_off: false)
+        params = { date_id: offday.date_id, is_off: true }
+
+        patch "/larvata_timesheet/offdays/#{offday.id}", params: params
+
+        expect(offday.reload.is_off).to(be(true))
+        expect(response.status).to(eq(200))
+      end
+    end
   end
 end

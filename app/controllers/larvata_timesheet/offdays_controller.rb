@@ -17,6 +17,16 @@ module LarvataTimesheet
       end
     end
 
+    def update
+      offday = Offday.find(params[:id])
+
+      if offday.update(offday_params)
+        render json: { message: true }
+      else
+        render json: { message: offday.errors.full_messages }, status: 400
+      end
+    end
+
     private
 
     def offday_params
