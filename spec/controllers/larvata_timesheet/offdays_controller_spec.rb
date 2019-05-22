@@ -69,5 +69,16 @@ module LarvataTimesheet
         expect(response.status).to(eq(200))
       end
     end
+
+    describe 'DELETE offdays#destroy' do
+      it 'destroys an offday' do
+        offday = create(:offday)
+
+        delete "/larvata_timesheet/offdays/#{offday.id}"
+
+        expect { offday.reload }.to(raise_error(ActiveRecord::RecordNotFound))
+        expect(response.status).to(eq(204))
+      end
+    end
   end
 end

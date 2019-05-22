@@ -27,6 +27,10 @@ module LarvataTimesheet
       end
     end
 
+    def destroy
+      Offday.find(params[:id]).destroy
+    end
+
     private
 
     def offday_params
