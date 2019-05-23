@@ -1,7 +1,7 @@
 module LarvataTimesheet
   class Activity < ApplicationRecord
-    belongs_to :category, class_name: LarvataTimesheet::Activity, optional: true
-    has_many :children, -> { order(rank: :asc) }, class_name: LarvataTimesheet::Activity, foreign_key: 'category_id'
+    belongs_to :category, class_name: 'LarvataTimesheet::Activity', optional: true
+    has_many :children, -> { order(:rank) }, class_name: 'LarvataTimesheet::Activity', foreign_key: 'category_id'
 
     validates_presence_of :rank, :name
     validates :rank, numericality: { greater_than_or_equal_to: 1 }
