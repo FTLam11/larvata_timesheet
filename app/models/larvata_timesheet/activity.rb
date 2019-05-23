@@ -9,6 +9,8 @@ module LarvataTimesheet
     validate :category_cannot_belong_to_self
     validate :category_cannot_support_deep_generations
 
+    after_create { update(rank: id) }
+
     scope :categories, -> { where(category: nil).order(:rank) }
     scope :to_tree, -> { order("field(id, #{to_tree_ids.join(',')})") }
 

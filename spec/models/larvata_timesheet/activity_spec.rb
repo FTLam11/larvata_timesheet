@@ -65,12 +65,12 @@ module LarvataTimesheet
 
     describe '.to_tree' do
       it 'returns an ordered list of parent and child activities' do
-        a_category = create(:activity, rank: 1)
-        b_category = create(:activity, rank: 2)
-        b_1_activity = create(:activity, category: b_category, rank: 3)
-        b_2_activity = create(:activity, category: b_category, rank: 4)
-        a_1_activity = create(:activity, category: a_category, rank: 5)
-        a_2_activity = create(:activity, category: a_category, rank: 6)
+        a_category = create(:activity)
+        b_category = create(:activity)
+        b_1_activity = create(:activity, category: b_category)
+        b_2_activity = create(:activity, category: b_category)
+        a_1_activity = create(:activity, category: a_category)
+        a_2_activity = create(:activity, category: a_category)
 
         expected = [
           a_category,
