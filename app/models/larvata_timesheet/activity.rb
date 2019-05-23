@@ -4,6 +4,7 @@ module LarvataTimesheet
 
     validates_presence_of :rank, :name
     validates :rank, numericality: { greater_than_or_equal_to: 1 }
+    validates :enabled, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
     validate :category_cannot_belong_to_self
 
     private

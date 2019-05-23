@@ -35,5 +35,13 @@ module LarvataTimesheet
       expect(activity.name).to(eq('Earl'))
       expect(activity_with_no_name).to_not(be_valid)
     end
+
+    it 'may be enabled' do
+      activity = build(:activity, enabled: true)
+      bad_activity = build(:activity, enabled: nil)
+
+      expect(activity.enabled).to(be(true))
+      expect(bad_activity).to_not(be_valid)
+    end
   end
 end
