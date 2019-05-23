@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module LarvataTimesheet
   RSpec.describe(Activity, type: :model) do
-    describe 'associations do' do
+    describe 'associations' do
       it 'may belong to a parent category' do
         category = create(:activity, name: 'Leave')
 
