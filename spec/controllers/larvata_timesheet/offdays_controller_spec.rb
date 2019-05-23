@@ -14,7 +14,6 @@ module LarvataTimesheet
           get offdays_path
 
           expect(response.status).to(eq(200))
-          expect(response.content_type).to(eq('application/json'))
           expect(body_content["data"].size).to(be >= MIN_DATE_COUNT)
           expect(body_content["data"].size).to(be <= MAX_DATE_COUNT)
           expect(off_day?(today)).to(be(true))
@@ -26,7 +25,6 @@ module LarvataTimesheet
           get offdays_path, params: { date_id: '2019-02-11' }
 
           expect(response.status).to(eq(200))
-          expect(response.content_type).to(eq('application/json'))
           expect(body_content["data"].size).to(eq(35))
         end
       end
