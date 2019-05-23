@@ -14,6 +14,10 @@ module LarvataTimesheet
     scope :categories, -> { where(category: nil).order(:rank) }
     scope :to_tree, -> { order("field(id, #{to_tree_ids.join(',')})") }
 
+    def as_json(*)
+      super(except: [:created_at, :updated_at])
+    end
+
     class << self
       private
 

@@ -71,7 +71,6 @@ module LarvataTimesheet
         b_2_activity = create(:activity, category: b_category)
         a_1_activity = create(:activity, category: a_category)
         a_2_activity = create(:activity, category: a_category)
-
         expected = [
           a_category,
           a_1_activity,
@@ -84,6 +83,16 @@ module LarvataTimesheet
         result = Activity.to_tree
 
         expect(result).to(eq(expected))
+      end
+    end
+
+    describe '#as_json' do
+      it 'has the required keys' do
+        activity = build(:activity)
+
+        result = JSON.parse(activity.to_json).keys
+
+        expect(result).to(include('id', 'category_id', 'rank', 'name', 'enabled'))
       end
     end
   end
