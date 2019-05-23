@@ -9,6 +9,21 @@ module LarvataTimesheet
     validate :category_cannot_belong_to_self
     validate :category_cannot_support_deep_generations
 
+    scope :categories, -> { where(category: nil).order(:rank) }
+    scope :to_tree, -> { order("field(id, #{to_tree_ids.join(',')})") }
+
+    class << self
+      private
+
+      def to_tree_ids
+        [].tap do |result|
+          includes(:children).categories.each do |category|
+            result << category.id << category.children.pluck(:id)
+          end
+        end.flatten
+      end
+    end
+
     private
 
     def category_cannot_belong_to_self
