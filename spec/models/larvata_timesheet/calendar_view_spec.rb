@@ -19,7 +19,7 @@ module LarvataTimesheet
         expect(last_date.is_off).to(be(true))
       end
 
-      context 'with the first day of a non-leap February falling on Sunday' do
+      context 'with the first day of a non-leap year February on Sunday' do
         it 'spans 4 weeks (28 days)' do
           date = Time.zone.parse('2015-02-01')
 

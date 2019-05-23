@@ -33,7 +33,7 @@ module LarvataTimesheet
     end
 
     describe '.spawn' do
-      it 'builds a weekday' do
+      it 'builds a workday' do
         date = Date.parse('2019-05-21')
 
         offday = Offday.spawn(date)
@@ -41,7 +41,7 @@ module LarvataTimesheet
         expect(offday.is_off).to(be(false))
       end
 
-      it 'builds a weekend' do
+      it 'builds an offday' do
         date = Date.parse('2019-05-19')
 
         offday = Offday.spawn(date)
