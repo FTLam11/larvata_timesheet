@@ -3,6 +3,6 @@ FactoryBot.define do
     name { "Leave" }
     rank { 1 }
     enabled { true }
-    category { nil }
+    category_id { nil }
   end
 end

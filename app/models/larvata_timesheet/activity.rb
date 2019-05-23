@@ -9,7 +9,7 @@ module LarvataTimesheet
     validate :category_cannot_belong_to_self
     validate :category_cannot_support_deep_generations
 
-    after_create { update(rank: id) }
+    before_validation :set_rank
 
     scope :categories, -> { where(category: nil).order(:rank) }
     scope :to_tree, -> { order("field(id, #{to_tree_ids.join(',')})") }
@@ -38,6 +38,10 @@ module LarvataTimesheet
 
     def category_cannot_support_deep_generations
       errors.add(:category, "does not support more than one generation") if category&.category
+    end
+
+    def set_rank
+      self.rank = (self.class.maximum(:rank) || 0) + 1 unless persisted?
     end
   end
 end

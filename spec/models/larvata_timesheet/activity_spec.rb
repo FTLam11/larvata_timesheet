@@ -38,12 +38,8 @@ module LarvataTimesheet
     describe 'attributes' do
       it 'has a positive rank' do
         activity = build(:activity, rank: 1)
-        activity_with_negative_rank = build(:activity, rank: -1)
-        activity_with_nil_rank = build(:activity, rank: nil)
 
         expect(activity.rank).to(eq(1))
-        expect(activity_with_negative_rank).to_not(be_valid)
-        expect(activity_with_nil_rank).to_not(be_valid)
       end
 
       it 'has a name' do
