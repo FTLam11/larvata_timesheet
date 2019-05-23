@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190520094252) do
+ActiveRecord::Schema.define(version: 20190523024801) do
+
+  create_table "larvata_timesheet_activities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.bigint "category_id"
+    t.integer "rank", null: false
+    t.string "name", null: false
+    t.boolean "enabled", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_larvata_timesheet_activities_on_category_id"
+  end
 
   create_table "larvata_timesheet_offdays", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string "date_id", null: false
@@ -20,4 +30,5 @@ ActiveRecord::Schema.define(version: 20190520094252) do
     t.index ["date_id"], name: "index_larvata_timesheet_offdays_on_date_id", unique: true
   end
 
+  add_foreign_key "larvata_timesheet_activities", "larvata_timesheet_activities", column: "category_id"
 end
