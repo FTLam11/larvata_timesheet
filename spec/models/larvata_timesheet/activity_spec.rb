@@ -10,5 +10,11 @@ module LarvataTimesheet
       expect(category.category).to(be(nil))
       expect(activity.category).to(be(category))
     end
+
+    it 'may not belong to itself' do
+      category = create(:activity)
+
+      expect { category.update!(category: category) }.to(raise_error(ActiveRecord::RecordInvalid))
+    end
   end
 end
