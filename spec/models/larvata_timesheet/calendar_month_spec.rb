@@ -33,7 +33,7 @@ module LarvataTimesheet
 
         result = JSON.parse(calendar_month.to_json).keys
 
-        expect(result).to(include('date_id', 'enabled'))
+        expect(result).to(include('date_id', 'enabled', 'persisted'))
       end
     end
   end

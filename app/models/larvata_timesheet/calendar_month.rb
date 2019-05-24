@@ -10,7 +10,9 @@ module LarvataTimesheet
     validates :enabled, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
 
     def as_json(*)
-      super(only: [:date_id, :enabled])
+      super(only: [:date_id, :enabled]).tap do |hash|
+        hash[:persisted] = persisted?
+      end
     end
   end
 end
