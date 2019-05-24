@@ -74,6 +74,14 @@ module LarvataTimesheet
         expect { offday.reload }.to(raise_error(ActiveRecord::RecordNotFound))
         expect(response.status).to(eq(204))
       end
+
+      it 'returns an error when the activity does not exist' do
+        offday = build(:offday, id: 9001)
+
+        delete offday_path(offday)
+
+        expect(response.status).to(eq(401))
+      end
     end
   end
 end
