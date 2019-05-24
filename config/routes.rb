@@ -1,4 +1,5 @@
 LarvataTimesheet::Engine.routes.draw do
   resources :offdays, defaults: { format: :json }, only: [:index, :create, :update, :destroy], param: :date_id
   resources :activities, defaults: { format: :json }, only: [:index, :create, :update, :destroy]
+  resources :calendar_months, defaults: { format: :json }, only: [:create, :show, :update], param: :date_id
 end
