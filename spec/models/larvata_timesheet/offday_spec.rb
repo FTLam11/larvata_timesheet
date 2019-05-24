@@ -7,8 +7,15 @@ module LarvataTimesheet
         offday = build(:offday, date_id: '2019-05-19')
         invalid_offday = build(:offday, date_id: 'AASJKDAKSJD')
 
-        expect(offday.valid?).to(be(true))
-        expect(invalid_offday.valid?).to(be(false))
+        expect(offday).to(be_valid)
+        expect(invalid_offday).to_not(be_valid)
+      end
+
+      it 'is unique' do
+        offday = create(:offday, date_id: '2019-05-19')
+        duplicate_offday = build(:offday, date_id: '2019-05-19')
+
+        expect(duplicate_offday).to_not(be_valid)
       end
     end
 
