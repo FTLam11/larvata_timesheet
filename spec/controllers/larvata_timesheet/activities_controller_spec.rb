@@ -33,6 +33,36 @@ module LarvataTimesheet
           expect(body_content["message"]).to(include("Name can't be blank"))
         end
       end
+
+      describe 'PATCH activities#update' do
+        it 'updates an activity' do
+          activity = create(:activity, name: 'Personal', enabled: false)
+
+          patch activity_path(activity), params: { enabled: true }
+
+          expect(activity.reload.enabled).to(be(true))
+          expect(response.status).to(eq(200))
+        end
+      end
+
+      describe 'DELETE activities#destroy' do
+        it 'destroys an activity' do
+          activity = create(:activity)
+
+          delete activity_path(activity)
+
+          expect { activity.reload }.to(raise_error(ActiveRecord::RecordNotFound))
+          expect(response.status).to(eq(204))
+        end
+
+        it 'returns an error when the activity does not exist' do
+          activity = build(:activity, id: 9001)
+
+          delete activity_path(activity)
+
+          expect(response.status).to(eq(401))
+        end
+      end
     end
   end
 end
