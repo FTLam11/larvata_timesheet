@@ -12,7 +12,7 @@ module LarvataTimesheet
       end
 
       it 'is unique' do
-        offday = create(:offday, date_id: '2019-05-19')
+        create(:offday, date_id: '2019-05-19')
         duplicate_offday = build(:offday, date_id: '2019-05-19')
 
         expect(duplicate_offday).to_not(be_valid)

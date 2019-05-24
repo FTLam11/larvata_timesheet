@@ -2,7 +2,10 @@ module LarvataTimesheet
   class Offday < ApplicationRecord
     self.primary_key = 'date_id'
 
-    validates :date_id, format: { with: /\A\d{4}-\d{2}-\d{2}\z/, message: 'only allows YYYY-MM-DD format' }
+    DATE_REGEX = /\A\d{4}-[0-1]{1}\d{1}-[0-3]{1}\d{1}\z/
+    private_constant :DATE_REGEX
+
+    validates :date_id, format: { with: DATE_REGEX, message: 'only allows YYYY-MM-DD format' }
     validates :date_id, uniqueness: true
     validates :is_off, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
 
