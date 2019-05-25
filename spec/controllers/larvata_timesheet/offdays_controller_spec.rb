@@ -13,7 +13,7 @@ module LarvataTimesheet
 
           get offdays_path
 
-          expect(response.status).to(eq(200))
+          expect(response).to(have_http_status(200))
           expect(body_content["data"].size).to(be >= MIN_DATE_COUNT)
           expect(body_content["data"].size).to(be <= MAX_DATE_COUNT)
           expect(off_day?(today)).to(be(true))
@@ -24,7 +24,7 @@ module LarvataTimesheet
         it 'responds with calendar data for the selected date' do
           get offdays_path, params: { date_id: '2019-02-11' }
 
-          expect(response.status).to(eq(200))
+          expect(response).to(have_http_status(200))
           expect(body_content["data"].size).to(eq(35))
         end
       end
@@ -37,7 +37,7 @@ module LarvataTimesheet
 
           post offdays_path, params: { date_id: date.to_s, is_off: true }
 
-          expect(response.status).to(eq(201))
+          expect(response).to(have_http_status(201))
         end
       end
 
@@ -48,7 +48,7 @@ module LarvataTimesheet
           post offdays_path, params: { date_id: 'AAA', is_off: true }
 
           expect(Offday.count).to(eq(offday_count))
-          expect(response.status).to(eq(400))
+          expect(response).to(have_http_status(400))
           expect(body_content["message"]).to(include("Date only allows YYYY-MM-DD format"))
         end
       end
@@ -61,7 +61,7 @@ module LarvataTimesheet
         patch offday_path(offday), params: { is_off: true }
 
         expect(offday.reload.is_off).to(be(true))
-        expect(response.status).to(eq(200))
+        expect(response).to(have_http_status(200))
       end
     end
 
@@ -72,7 +72,7 @@ module LarvataTimesheet
         delete offday_path(offday)
 
         expect { offday.reload }.to(raise_error(ActiveRecord::RecordNotFound))
-        expect(response.status).to(eq(204))
+        expect(response).to(have_http_status(204))
       end
 
       it 'returns an error when the activity does not exist' do
@@ -80,7 +80,7 @@ module LarvataTimesheet
 
         delete offday_path(offday)
 
-        expect(response.status).to(eq(401))
+        expect(response).to(have_http_status(401))
       end
     end
   end

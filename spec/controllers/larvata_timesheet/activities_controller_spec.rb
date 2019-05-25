@@ -8,7 +8,7 @@ module LarvataTimesheet
 
         get activities_path
 
-        expect(response.status).to(eq(200))
+        expect(response).to(have_http_status(200))
         expect(body_content["data"]).to(include(JSON.parse(activity.to_json)))
       end
     end
@@ -18,7 +18,7 @@ module LarvataTimesheet
         it 'creates an activity' do
           post activities_path, params: attributes_for(:activity)
 
-          expect(response.status).to(eq(201))
+          expect(response).to(have_http_status(201))
         end
       end
 
@@ -29,7 +29,7 @@ module LarvataTimesheet
           post activities_path, params: { name: '', enabled: true }
 
           expect(Activity.count).to(eq(activity_count))
-          expect(response.status).to(eq(400))
+          expect(response).to(have_http_status(400))
           expect(body_content["message"]).to(include("Name can't be blank"))
         end
       end
@@ -42,7 +42,7 @@ module LarvataTimesheet
         patch activity_path(activity), params: { enabled: true }
 
         expect(activity.reload.enabled).to(be(true))
-        expect(response.status).to(eq(200))
+        expect(response).to(have_http_status(200))
       end
     end
 
@@ -53,7 +53,7 @@ module LarvataTimesheet
         delete activity_path(activity)
 
         expect { activity.reload }.to(raise_error(ActiveRecord::RecordNotFound))
-        expect(response.status).to(eq(204))
+        expect(response).to(have_http_status(204))
       end
 
       it 'returns an error when the activity does not exist' do
@@ -61,7 +61,7 @@ module LarvataTimesheet
 
         delete activity_path(activity)
 
-        expect(response.status).to(eq(401))
+        expect(response).to(have_http_status(401))
       end
     end
   end

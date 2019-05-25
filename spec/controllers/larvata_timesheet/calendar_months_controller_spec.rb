@@ -9,7 +9,7 @@ module LarvataTimesheet
 
           get calendar_month_path(calendar_month)
 
-          expect(response.status).to(eq(200))
+          expect(response).to(have_http_status(200))
           expect(body_content['data']).to(include(JSON.parse(calendar_month.to_json)))
           expect(body_content['data']['persisted']).to(be(true))
         end
@@ -21,7 +21,7 @@ module LarvataTimesheet
 
           get calendar_month_path(calendar_month)
 
-          expect(response.status).to(eq(200))
+          expect(response).to(have_http_status(200))
           expect(body_content['data']).to(include(JSON.parse(calendar_month.to_json)))
           expect(body_content['data']['persisted']).to(be(false))
         end
@@ -36,7 +36,7 @@ module LarvataTimesheet
           post calendar_months_path, params: { date_id: '2019-05', enabled: true }
 
           expect(body_content['data'].keys).to(include(*JSON.parse(calendar_month.to_json).keys))
-          expect(response.status).to(eq(201))
+          expect(response).to(have_http_status(201))
         end
       end
 
@@ -47,7 +47,7 @@ module LarvataTimesheet
           post calendar_months_path, params: { date_id: '2019-05', enabled: nil }
 
           expect(CalendarMonth.count).to(eq(calendar_month_count))
-          expect(response.status).to(eq(400))
+          expect(response).to(have_http_status(400))
           expect(body_content['message']).to(include('Enabled only allows a valid boolean value'))
         end
       end
@@ -61,7 +61,7 @@ module LarvataTimesheet
           patch calendar_month_path(calendar_month), params: { enabled: true }
 
           expect(calendar_month.reload.enabled).to(be(true))
-          expect(response.status).to(eq(200))
+          expect(response).to(have_http_status(200))
         end
       end
     end
