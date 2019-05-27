@@ -1,5 +1,7 @@
 module LarvataTimesheet
   class Activity < ApplicationRecord
+    default_scope { where(enabled: true) }
+
     belongs_to :category, class_name: 'LarvataTimesheet::Activity', optional: true
     has_many :children, -> { order(:rank) }, class_name: 'LarvataTimesheet::Activity', foreign_key: 'category_id'
 

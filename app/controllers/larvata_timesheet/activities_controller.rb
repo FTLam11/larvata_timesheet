@@ -35,7 +35,7 @@ module LarvataTimesheet
     end
 
     def set_activity
-      @activity = Activity.find(params[:id])
+      @activity = Activity.unscoped.find(params[:id])
     rescue ActiveRecord::RecordNotFound => e
       render json: { message: e.message }, status: 401
     end

@@ -60,11 +60,11 @@ module LarvataTimesheet
     end
 
     describe '.to_tree' do
-      it 'returns an ordered list of parent and child activities' do
+      it 'returns an ordered list of enabled parent and child activities' do
         a_category = create(:activity)
         b_category = create(:activity)
         b_1_activity = create(:activity, category: b_category)
-        b_2_activity = create(:activity, category: b_category)
+        b_2_activity = create(:activity, category: b_category, enabled: false)
         a_1_activity = create(:activity, category: a_category)
         a_2_activity = create(:activity, category: a_category)
         expected = [
@@ -73,7 +73,6 @@ module LarvataTimesheet
           a_2_activity,
           b_category,
           b_1_activity,
-          b_2_activity,
         ]
 
         result = Activity.to_tree
