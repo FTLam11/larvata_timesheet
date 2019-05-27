@@ -25,7 +25,7 @@ module LarvataTimesheet
     end
 
     def destroy
-      @activity.destroy
+      Activity.find_nodes(@activity.id).update_all(enabled: false)
     end
 
     private

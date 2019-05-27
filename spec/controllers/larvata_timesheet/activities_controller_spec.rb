@@ -47,12 +47,23 @@ module LarvataTimesheet
     end
 
     describe 'DELETE activities#destroy' do
-      it 'destroys an activity' do
+      it 'disables a child activity' do
         activity = create(:activity)
 
         delete activity_path(activity)
 
-        expect { activity.reload }.to(raise_error(ActiveRecord::RecordNotFound))
+        expect(activity.reload.enabled).to(be(false))
+        expect(response).to(have_http_status(204))
+      end
+
+      it 'disables a parent category and all children' do
+        category = create(:activity)
+        child_activity = create(:activity, category_id: category.id)
+
+        delete activity_path(category)
+
+        expect(category.reload.enabled).to(be(false))
+        expect(child_activity.reload.enabled).to(be(false))
         expect(response).to(have_http_status(204))
       end
 

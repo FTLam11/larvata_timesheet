@@ -13,6 +13,7 @@ module LarvataTimesheet
 
     scope :categories, -> { where(category: nil).order(:rank) }
     scope :to_tree, -> { order("field(id, #{to_tree_ids.join(',')})") }
+    scope :find_nodes, -> (parent_id) { where("id = ? OR category_id = ?", parent_id, parent_id) }
 
     def as_json(*)
       super(except: [:created_at, :updated_at])
