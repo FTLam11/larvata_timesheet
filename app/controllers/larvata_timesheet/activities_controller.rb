@@ -17,6 +17,7 @@ module LarvataTimesheet
     end
 
     def update
+      # TODO updating rank via promote/demote or drag-n-drop?
       if @activity.update(activity_params)
         render json: { message: true }
       else
