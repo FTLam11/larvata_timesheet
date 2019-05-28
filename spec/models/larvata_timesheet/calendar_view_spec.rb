@@ -6,17 +6,18 @@ module LarvataTimesheet
       MIN_DAY_COUNT = 4 * 7
       MAX_DAY_COUNT = 6 * 7
 
-      it 'generates a range of date-like objects' do
+      it 'generates a range of date-like objects grouped in weeks' do
         date = '2019-05-21'
 
         calendar = CalendarView.call(date)
-        first_date = calendar.first
-        last_date = calendar.last
+        first_date = calendar.first.first
+        last_date = calendar.last.last
 
         expect(first_date.date_id).to(eq('2019-04-28'))
         expect(first_date.is_off).to(be(true))
         expect(last_date.date_id).to(eq('2019-06-01'))
         expect(last_date.is_off).to(be(true))
+        expect(calendar.all? { |week| week.size == 7 }).to(be(true))
       end
 
       context 'with the first day of a non-leap year February on Sunday' do
@@ -25,7 +26,8 @@ module LarvataTimesheet
 
           calendar = CalendarView.call(date.to_s(:f))
 
-          expect(calendar.size).to(eq(MIN_DAY_COUNT))
+          expect(calendar.size).to(eq(4))
+          expect(calendar.flatten.size).to(eq(MIN_DAY_COUNT))
         end
       end
 
@@ -35,7 +37,8 @@ module LarvataTimesheet
 
           calendar = CalendarView.call(date.to_s(:f))
 
-          expect(calendar.size).to(eq(MAX_DAY_COUNT))
+          expect(calendar.size).to(eq(6))
+          expect(calendar.flatten.size).to(eq(MAX_DAY_COUNT))
         end
       end
 

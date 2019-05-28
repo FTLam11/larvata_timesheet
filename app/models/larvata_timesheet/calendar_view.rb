@@ -15,7 +15,7 @@ module LarvataTimesheet
         offdays.detect(-> { Offday.spawn(day) }) do |off_day|
           off_day.date_id == day.to_s
         end
-      end
+      end.in_groups_of(7)
     end
   end
 end
