@@ -8,7 +8,7 @@ module RequestHelper
   end
 
   def pick_date(date)
-    body_content["data"].detect { |day| day["date_id"] == date }
+    body_content["data"].flatten.detect { |day| day["date_id"] == date }
   end
 end
 

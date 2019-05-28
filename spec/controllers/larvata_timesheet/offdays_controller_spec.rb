@@ -14,8 +14,8 @@ module LarvataTimesheet
           get offdays_path
 
           expect(response).to(have_http_status(200))
-          expect(body_content["data"].size).to(be >= MIN_DATE_COUNT)
-          expect(body_content["data"].size).to(be <= MAX_DATE_COUNT)
+          expect(body_content["data"].flatten.size).to(be >= MIN_DATE_COUNT)
+          expect(body_content["data"].flatten.size).to(be <= MAX_DATE_COUNT)
           expect(off_day?(today)).to(be(true))
         end
       end
@@ -25,7 +25,7 @@ module LarvataTimesheet
           get offdays_path, params: { date_id: '2019-02-11' }
 
           expect(response).to(have_http_status(200))
-          expect(body_content["data"].size).to(eq(35))
+          expect(body_content["data"].flatten.size).to(eq(35))
         end
       end
     end
@@ -51,36 +51,6 @@ module LarvataTimesheet
           expect(response).to(have_http_status(400))
           expect(body_content["message"]).to(include("Date only allows YYYY-MM-DD format"))
         end
-      end
-    end
-
-    describe 'PATCH offdays#update' do
-      it 'updates an offday' do
-        offday = create(:offday, is_off: false)
-
-        patch offday_path(offday), params: { is_off: true }
-
-        expect(offday.reload.is_off).to(be(true))
-        expect(response).to(have_http_status(200))
-      end
-    end
-
-    describe 'DELETE offdays#destroy' do
-      it 'destroys an offday' do
-        offday = create(:offday)
-
-        delete offday_path(offday)
-
-        expect { offday.reload }.to(raise_error(ActiveRecord::RecordNotFound))
-        expect(response).to(have_http_status(204))
-      end
-
-      it 'returns an error when the activity does not exist' do
-        offday = build(:offday, id: 9001)
-
-        delete offday_path(offday)
-
-        expect(response).to(have_http_status(401))
       end
     end
   end
