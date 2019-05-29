@@ -2,6 +2,14 @@ require 'rails_helper'
 
 module LarvataTimesheet
   RSpec.describe(Offday, type: :model) do
+    it 'belongs to a calendar' do
+      offday = create(:offday)
+      offday_with_no_calendar = build(:offday, calendar: nil)
+
+      expect(offday.calendar).to_not(be_nil)
+      expect(offday_with_no_calendar).to_not(be_valid)
+    end
+
     describe '#date_id' do
       it 'has a valid format YYYY-MM-DD' do
         offday = build(:offday, date_id: '2019-05-19')

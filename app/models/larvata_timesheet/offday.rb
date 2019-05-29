@@ -2,6 +2,8 @@ module LarvataTimesheet
   class Offday < ApplicationRecord
     self.primary_key = 'date_id'
 
+    belongs_to :calendar, foreign_key: 'larvata_timesheet_calendar_id'
+
     DATE_REGEX = /\A\d{4}-[0-1]{1}\d{1}-[0-3]{1}\d{1}\z/
     private_constant :DATE_REGEX
 
