@@ -8,7 +8,7 @@ module LarvataTimesheet
     end
 
     def create
-      offday = Offday.find_or_initialize_by(date_id: offday_params[:date_id])
+      offday = Offday.find_or_initialize_by(offday_params.except(:is_off))
       offday.is_off = offday_params[:is_off]
 
       if offday.save
@@ -21,7 +21,7 @@ module LarvataTimesheet
     private
 
     def offday_params
-      params.permit(:date_id, :is_off)
+      params.permit(:date_id, :is_off, :larvata_timesheet_calendar_id)
     end
   end
 end

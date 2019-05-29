@@ -33,9 +33,10 @@ module LarvataTimesheet
     describe 'POST offdays#create' do
       context 'with valid date and offday inputs' do
         it 'creates an offday' do
-          date = Date.today
+          calendar = create(:calendar)
+          params = { date_id: Date.today.to_s, is_off: true, larvata_timesheet_calendar_id: calendar.id }
 
-          post offdays_path, params: { date_id: date.to_s, is_off: true }
+          post offdays_path, params: params
 
           expect(response).to(have_http_status(201))
         end
