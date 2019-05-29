@@ -8,6 +8,10 @@ module LarvataTimesheet
 
     scope :default, -> { where(default: true).first }
 
+    def as_json(*)
+      super(except: [:created_at, :updated_at])
+    end
+
     private
 
     def default_true_only_has_one_record
