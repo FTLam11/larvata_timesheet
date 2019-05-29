@@ -45,7 +45,7 @@ module LarvataTimesheet
       it 'raises an error when given an invalid start day' do
         date = Time.zone.now
 
-        expect { CalendarView.call(date, 'ASDFGHJKL;') }.to(raise_error(ArgumentError))
+        expect { CalendarView.call(date, start_day: 'ASDFGHJKL;') }.to(raise_error(ArgumentError))
       end
     end
   end
