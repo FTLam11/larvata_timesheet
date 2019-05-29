@@ -11,11 +11,14 @@ module LarvataTimesheet
     validates :date_id, uniqueness: true
     validates :is_off, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
 
+    scope :for_calendar, -> (calendar_id) { where(larvata_timesheet_calendar_id: calendar_id) }
+    scope :between, -> (start, fin) { where("date(date_id) BETWEEN ? AND ?", start, fin) }
+
     def self.around_range(calendar_id, start, fin)
       if calendar_id
-        where(larvata_timesheet_calendar_id: calendar_id).where("date(date_id) BETWEEN ? AND ?", start, fin)
+        for_calendar(calendar_id).merge(between(start, fin))
       else
-        where("date(date_id) BETWEEN ? AND ?", start, fin)
+        between(start, fin).merge(Calendar.default)
       end
     end
 

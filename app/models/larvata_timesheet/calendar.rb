@@ -6,6 +6,8 @@ module LarvataTimesheet
     validates :default, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
     validate :default_true_only_has_one_record
 
+    scope :default, -> { where(default: true).first }
+
     private
 
     def default_true_only_has_one_record
