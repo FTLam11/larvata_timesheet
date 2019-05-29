@@ -31,5 +31,13 @@ module LarvataTimesheet
 
       expect(default_calendar).to_not(be_valid)
     end
+
+    it 'has many offdays' do
+      calendar = create(:calendar)
+
+      calendar.offdays.create(date_id: '2019-05-29', is_off: true)
+
+      expect(calendar.offdays.size).to(eq(1))
+    end
   end
 end

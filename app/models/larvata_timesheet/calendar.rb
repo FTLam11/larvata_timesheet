@@ -1,5 +1,6 @@
 module LarvataTimesheet
   class Calendar < ApplicationRecord
+    has_many :offdays, foreign_key: 'larvata_timesheet_calendar_id'
 
     validates :name, presence: true, uniqueness: true
     validates :default, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
