@@ -9,7 +9,8 @@ module LarvataTimesheet
       context 'with no date param' do
         it 'responds with the current calendar data' do
           today = Date.today.to_s
-          create(:offday, date_id: today, is_off: true)
+          calendar = create(:calendar, default: true)
+          create(:offday, date_id: today, is_off: true, calendar: calendar)
 
           get offdays_path
 

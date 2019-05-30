@@ -4,7 +4,7 @@ module LarvataTimesheet
 
     validates :name, presence: true, uniqueness: true
     validates :default, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
-    validate :default_true_only_has_one_record
+    validate :default_true_only_has_one_record, if: Proc.new { |c| c.default }
 
     scope :default, -> { where(default: true) }
 
@@ -15,7 +15,9 @@ module LarvataTimesheet
     private
 
     def default_true_only_has_one_record
-      errors.add(:default, "can't be default since another calendar already is") if self.class.where(default: true).exists?
+      if self.class.default.exists? and !self.class.default.include?(self)
+        errors.add(:default, "can't be set since another calendar already is")
+      end
     end
   end
 end
