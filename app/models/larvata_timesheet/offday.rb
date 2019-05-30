@@ -16,9 +16,9 @@ module LarvataTimesheet
 
     def self.around_range(calendar_id, start, fin)
       if calendar_id
-        for_calendar(calendar_id).merge(between(start, fin))
+        joins(:calendar).for_calendar(calendar_id).merge(between(start, fin))
       else
-        between(start, fin).merge(Calendar.default)
+        joins(:calendar).between(start, fin).merge(Calendar.default)
       end
     end
 

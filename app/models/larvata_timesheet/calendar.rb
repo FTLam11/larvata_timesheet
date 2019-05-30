@@ -6,7 +6,7 @@ module LarvataTimesheet
     validates :default, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
     validate :default_true_only_has_one_record
 
-    scope :default, -> { where(default: true).first }
+    scope :default, -> { where(default: true) }
 
     def as_json(*)
       super(except: [:created_at, :updated_at])
