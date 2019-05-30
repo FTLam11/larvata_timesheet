@@ -13,6 +13,23 @@ module LarvataTimesheet
       end
     end
 
+    describe 'POST calendars#create' do
+      context 'with new calendars' do
+        context 'and valid params' do
+          it 'batch creates calendars' do
+            params = {
+              calendars: [
+                { name: 'First', default: false },
+                { name: 'Second', default: true }
+              ]
+            }
+
+            post calendars_path, params: params
+
+            expect(response).to(have_http_status(201))
+          end
+        end
+
     describe 'DELETE calendars#destroy' do
       it 'destroys non-default calendars' do
         calendar = create(:calendar, default: false)
