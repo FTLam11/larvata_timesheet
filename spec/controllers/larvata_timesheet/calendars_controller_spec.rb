@@ -30,6 +30,25 @@ module LarvataTimesheet
           end
         end
 
+        context 'and mix of valid/invalid params' do
+          it 'responds with errors for each calendar' do
+            params = {
+              calendars: [
+                { name: 'First', default: false },
+                { name: '', default: true }
+              ]
+            }
+
+            post calendars_path, params: params
+            formatted_errors = body_content["message"].all? { |o| o.keys == %w(id errors) }
+
+            expect(formatted_errors).to(be(true))
+            expect(response).to(have_http_status(400))
+          end
+        end
+      end
+    end
+
     describe 'DELETE calendars#destroy' do
       it 'destroys non-default calendars' do
         calendar = create(:calendar, default: false)
