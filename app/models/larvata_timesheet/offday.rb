@@ -10,6 +10,7 @@ module LarvataTimesheet
     validates :date_id, format: { with: DATE_REGEX, message: 'only allows YYYY-MM-DD format' }
     validates :date_id, uniqueness: true
     validates :is_off, inclusion: { in: [true, false], message: 'only allows a valid boolean value' }
+    validate :valid_date_id
 
     scope :for_calendar, -> (calendar_id) { where(larvata_timesheet_calendar_id: calendar_id) }
     scope :between, -> (start, fin) { where("date(date_id) BETWEEN ? AND ?", start, fin) }
@@ -29,6 +30,14 @@ module LarvataTimesheet
 
     def as_json(*)
       super(only: [:date_id, :is_off])
+    end
+
+    private
+
+    def valid_date_id
+      Date.parse(date_id)
+    rescue ArgumentError
+      errors.add(:date_id, "must be a valid date")
     end
   end
 end

@@ -25,6 +25,12 @@ module LarvataTimesheet
 
         expect(duplicate_offday).to_not(be_valid)
       end
+
+      it 'is a valid date' do
+        invalid_date = build(:offday, date_id: '2019-13-20')
+
+        expect(invalid_date).to_not(be_valid)
+      end
     end
 
     describe '#is_off' do
