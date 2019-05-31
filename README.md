@@ -33,6 +33,10 @@ $ gem install larvata_timesheet
 * Weekend is work day
 * Assume holidays are manually handled by admin, differs year to year
 
+### Multiple calendar support
+* Offdays must be associated with a certain calendar
+* Name, default (only one can be default)
+
 ### Conclusion
 * If a weekday has a row, it is an off day
 * If weekend has a row, it is a work day
