@@ -9,7 +9,13 @@ module LarvataTimesheet
     end
 
     def create
-      batch = calendar_params[:calendars].map { |attrs| Calendar.create(attrs) }
+      batch = calendar_params[:calendars].map do |attrs|
+        if attrs[:id]
+          Calendar.find(attrs[:id]).tap { |c| c.update(attrs) }
+        else
+          Calendar.create(attrs)
+        end
+      end
 
       if batch.all?(&:persisted?)
         render json: {}, status: 201
