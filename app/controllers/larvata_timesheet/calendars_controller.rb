@@ -20,7 +20,7 @@ module LarvataTimesheet
 
     def destroy
       if @calendar.default
-        render json: { message: @calendar.errors.full_messages }, status: 400
+        render json: { message: "Can't delete a default calendar" }, status: 400
       else
         @calendar.destroy
       end
