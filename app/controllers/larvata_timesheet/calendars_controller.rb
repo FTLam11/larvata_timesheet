@@ -18,7 +18,7 @@ module LarvataTimesheet
       end
 
       if batch.all?(&:persisted?)
-        render json: {}, status: 201
+        render json: { calendars: batch }
       else
         render json: { message: batch.map { |o| { id: o.id, errors: o.errors.full_messages } } }, status: 400
       end

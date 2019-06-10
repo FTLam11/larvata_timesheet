@@ -25,8 +25,10 @@ module LarvataTimesheet
             }
 
             post calendars_path, params: params
+            has_required_keys = body_content["calendars"].all? { |o| o.keys == %w(id name default) }
 
-            expect(response).to(have_http_status(201))
+            expect(response).to(have_http_status(200))
+            expect(has_required_keys).to(be(true))
           end
         end
 
