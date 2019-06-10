@@ -4,7 +4,7 @@ module LarvataTimesheet
   class OffdaysController < ApplicationController
     def index
       date_id = params[:date_id] || Date.today.to_s
-      render json: { data: CalendarView.call(date_id, params[:id]) }
+      render json: { data: CalendarView.call(date_id, params[:calendar_id]) }
     end
 
     def create
