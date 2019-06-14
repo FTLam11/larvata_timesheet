@@ -4,10 +4,14 @@ module LarvataTimesheet
   RSpec.describe Calendar, type: :model do
     it 'has a name' do
       calendar = build(:calendar, name: 'Yo')
-      calendar_with_no_name = build(:calendar, name: '')
 
       expect(calendar).to(be_valid)
-      expect(calendar_with_no_name).to_not(be_valid)
+    end
+
+    it 'has a valid name' do
+      calendar_with_no_name = build(:calendar, name: '')
+
+      expect(calendar_with_no_name).to(be_invalid)
     end
 
     it 'has a unique name' do
@@ -15,7 +19,7 @@ module LarvataTimesheet
 
       duplicate_calendar = build(:calendar, name: 'Yo')
 
-      expect(duplicate_calendar).to_not(be_valid)
+      expect(duplicate_calendar).to(be_invalid)
     end
 
     it 'has a default' do
@@ -29,15 +33,15 @@ module LarvataTimesheet
 
       default_calendar = build(:calendar, name: 'Default', default: true)
 
-      expect(default_calendar).to_not(be_valid)
+      expect(default_calendar).to(be_invalid)
     end
 
     it 'has many offdays' do
       calendar = create(:calendar)
 
-      calendar.offdays.create(date_id: '2019-05-29', is_off: true)
+      offday = calendar.offdays.create(date_id: '2019-05-29', is_off: true)
 
-      expect(calendar.offdays.size).to(eq(1))
+      expect(calendar.offdays).to(include(offday))
     end
   end
 end

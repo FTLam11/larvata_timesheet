@@ -8,14 +8,14 @@ module LarvataTimesheet
         invalid_calendar_month = build(:calendar_month, date_id: 'AASJKDAKSJD')
 
         expect(calendar_month).to(be_valid)
-        expect(invalid_calendar_month).to_not(be_valid)
+        expect(invalid_calendar_month).to(be_invalid)
       end
 
       it 'has a unique date_id' do
         create(:calendar_month, date_id: '2019-05')
         duplicate_calendar_month = build(:calendar_month, date_id: '2019-05')
 
-        expect(duplicate_calendar_month).to_not(be_valid)
+        expect(duplicate_calendar_month).to(be_invalid)
       end
 
       it 'may be enabled' do
@@ -23,7 +23,7 @@ module LarvataTimesheet
         bad_calendar_month = build(:calendar_month, enabled: nil)
 
         expect(calendar_month.enabled).to(be(true))
-        expect(bad_calendar_month).to_not(be_valid)
+        expect(bad_calendar_month).to(be_invalid)
       end
     end
 

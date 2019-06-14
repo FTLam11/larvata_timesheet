@@ -4,9 +4,9 @@ module LarvataTimesheet
   RSpec.describe(Activity, type: :model) do
     describe 'associations' do
       it 'may belong to a parent category' do
-        category = create(:activity, name: 'Leave')
+        category = build(:activity, name: 'Leave')
 
-        activity = create(:activity, category: category)
+        activity = build(:activity, category: category)
 
         expect(category.category).to(be(nil))
         expect(activity.category).to(be(category))
@@ -24,14 +24,14 @@ module LarvataTimesheet
         activity = create(:activity, category: category)
         grandchild_activity = build(:activity, category: activity)
 
-        expect(grandchild_activity).to_not(be_valid)
+        expect(grandchild_activity).to(be_invalid)
       end
 
       it 'may not belong to itself' do
-        category = create(:activity)
+        category = build(:activity)
         category.category = category
 
-        expect(category).to_not(be_valid)
+        expect(category).to(be_invalid)
       end
     end
 
@@ -44,18 +44,22 @@ module LarvataTimesheet
 
       it 'has a name' do
         activity = build(:activity, name: 'Earl')
-        activity_with_no_name = build(:activity, name: nil)
 
         expect(activity.name).to(eq('Earl'))
-        expect(activity_with_no_name).to_not(be_valid)
+      end
+
+      it 'has a valid name' do
+        activity_with_no_name = build(:activity, name: nil)
+
+        expect(activity_with_no_name).to(be_invalid)
       end
 
       it 'may be enabled' do
         activity = build(:activity, enabled: true)
         bad_activity = build(:activity, enabled: nil)
 
-        expect(activity.enabled).to(be(true))
-        expect(bad_activity).to_not(be_valid)
+        expect(activity).to(be_valid)
+        expect(bad_activity).to(be_invalid)
       end
     end
 

@@ -3,11 +3,11 @@ require 'rails_helper'
 module LarvataTimesheet
   RSpec.describe(Offday, type: :model) do
     it 'belongs to a calendar' do
-      offday = create(:offday)
+      offday = build(:offday)
       offday_with_no_calendar = build(:offday, calendar: nil)
 
       expect(offday.calendar).to_not(be_nil)
-      expect(offday_with_no_calendar).to_not(be_valid)
+      expect(offday_with_no_calendar).to(be_invalid)
     end
 
     describe '#date_id' do
@@ -16,26 +16,28 @@ module LarvataTimesheet
         invalid_offday = build(:offday, date_id: 'AASJKDAKSJD')
 
         expect(offday).to(be_valid)
-        expect(invalid_offday).to_not(be_valid)
+        expect(invalid_offday).to(be_invalid)
       end
 
       it 'is unique' do
         create(:offday, date_id: '2019-05-19')
         duplicate_offday = build(:offday, date_id: '2019-05-19')
 
-        expect(duplicate_offday).to_not(be_valid)
+        expect(duplicate_offday).to(be_invalid)
       end
 
       it 'is a valid date' do
         invalid_date = build(:offday, date_id: '2019-13-20')
 
-        expect(invalid_date).to_not(be_valid)
+        expect(invalid_date).to(be_invalid)
       end
     end
 
     describe '#is_off' do
       it 'has a valid boolean value do' do
-        expect { create(:offday, is_off: nil) }.to(raise_error(ActiveRecord::RecordInvalid))
+        offday = build(:offday, is_off: nil)
+
+        expect(offday).to(be_invalid)
       end
 
       context 'regardless of what day it is' do
