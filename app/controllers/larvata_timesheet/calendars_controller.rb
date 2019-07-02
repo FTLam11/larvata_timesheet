@@ -9,7 +9,7 @@ module LarvataTimesheet
     end
 
     def create
-      batch = calendar_params[:calendars].map do |attrs|
+      batch = calendar_params[:calendars].partition { |attrs| !attrs[:default] }.flatten.map do |attrs|
         if attrs[:id]
           Calendar.find(attrs[:id]).tap { |c| c.update(attrs) }
         else
