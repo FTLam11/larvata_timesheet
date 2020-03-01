@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    larvata_timesheet (0.1.1)
+    larvata_timesheet (0.1.2)
       rails (>= 5.1.4)
 
 GEM

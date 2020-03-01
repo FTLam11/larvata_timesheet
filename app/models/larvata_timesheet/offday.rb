@@ -24,8 +24,7 @@ module LarvataTimesheet
     end
 
     def self.spawn(date)
-      is_off = date.on_weekday? ? false : true
-      new(date_id: date, is_off: is_off)
+      new(date_id: date, is_off: date.on_weekend?)
     end
 
     def as_json(*)
