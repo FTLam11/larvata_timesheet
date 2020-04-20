@@ -21,16 +21,12 @@ module LarvataTimesheet
       super(except: [:created_at, :updated_at])
     end
 
-    class << self
-      private
-
-      def to_tree_ids
-        [].tap do |result|
-          includes(:children).categories.each do |category|
-            result << category.id << category.children.pluck(:id)
-          end
-        end.flatten
-      end
+    def self.to_tree_ids
+      [].tap do |result|
+        includes(:children).categories.each do |category|
+          result << category.id << category.children.pluck(:id)
+        end
+      end.flatten
     end
 
     private
