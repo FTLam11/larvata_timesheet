@@ -1,8 +1,8 @@
 # LarvataTimesheet
-Timesheet functionality in a small Rails engine
+~~Timesheet~~ *Incomplete* calendar functionality in a small Rails engine
 
 ## Usage
-Read the specs.
+Read the specs. Also read the [RAILS GUIDES ON ENGINES](https://guides.rubyonrails.org/engines.html#hooking-into-an-application).
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -21,25 +21,17 @@ Or install it yourself as:
 $ gem install larvata_timesheet
 ```
 
-## Persisting Workdays
+## Key assumptions
 * Assume weekday is M-F, weekend is Sa/Su.
-
-### Normal cases
 * Weekday is work day
 * Weekend is off day
-
-### Special cases
-* Weekday is off day
-* Weekend is work day
 * Assume holidays are manually handled by admin, differs year to year
 
-### Multiple calendar support
+## Multiple calendar support
 * Offdays must be associated with a certain calendar
-* Name, default (only one can be default)
-
-### Conclusion
-* If a weekday has a row, it is an off day
-* If weekend has a row, it is a work day
+* Only one calendar can be designated as default
+* If a weekday has a database record, it is an off day
+* If weekend has a database record, it is a work day
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
